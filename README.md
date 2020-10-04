@@ -81,6 +81,20 @@ You should now be able to see the video from motion, and the off button should r
 
 --Make it even better
 
+-Docker
+This application is capable of running as a docker container for simplicity (simple if you're familiar with Docker). After cloning the repo to your local machine.
+
+Start by running:
+docker build -t <username>/<whatever-you-wish-to-title-the-app>
+
+the -t flag will "tag" or name the image so when you run "docker ps", it is easier to identify
+
+Then run:
+docker run -p <port-you-want-to-use>:5000 -d <username>/<whatever-you-tagged-the-app-as>
+
+
+
+-Nginx
 You can run the node server automatically when the pi boots up with crontab
 Add this line to cron:
 @reboot /usr/local/bin/forever start -c /path/to/node /your/path/to/your/app.js
@@ -91,7 +105,8 @@ Personally, I wanted to input the ip address and get the application, so i insta
 
 Nginx configuration could fill books upon books, but my configuration is basic. “Sudo apt install nginx”, the go to /etc/nginx/sites-available. I created a new file based on the default (sudo mv default whateveryounameit) and this is what it looks like: 
 
-*be sure to change the local ip address to the static ip you’ve set, and change the “root” to wherever you cloned the repo to*
+*be sure to change the local ip address to the static ip you’ve set (or your hostname, set by the avahi daemon. Usually, it's "pi.local" on the Raspberry Pi), and change the “root” to wherever you cloned the repo to*
+
 server {
         listen 80;
         listen [::]:80;
@@ -104,19 +119,22 @@ server {
 
         location / {
                 autoindex on;
-autoindex_exact_size off;
+        autoindex_exact_size off;
                 proxy_pass http://localhost:5000;
                 }
-}
+        }
 
 After creating that file, be sure to copy it to the “sites-enabled” folder in /etc/nginx/. Restart the nginx service, and, while the node index.js server is running, visit the local ip address on another browser. If you see the application, it’s finished!
 
 Let me know of any issues or bugs, and if you’ve got a feature to add, let me know! (andrew.karpisz@gmail.com)
 
-This app was developed because of my desire for a fully configurable baby monitor. The UI is basic, customize to your liking.
+This app was developed because of my desire for a fully configurable baby monitor application for the raspberry pi. The UI is basic, customize to your liking.
 
 
 --coming up
+
+-I'm working on creating a version of the app for docker that will contain the application and the nginx server in one, making it even easier to use.
+
 (Not finished yet but repo is created on my github) there are python scripts to add, with  functionality like SMS alerts, alerting you of your child moving. And I’m working on an OpenCV script that will alert you via SMS if your child’s eyes are open. Check back if interested!
 
 
