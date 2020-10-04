@@ -3,5 +3,5 @@ services:
         app:
                 image: nginx:1.19
                 volumes:
-                        - ./
+                        - .
                 expose: ["80"]
