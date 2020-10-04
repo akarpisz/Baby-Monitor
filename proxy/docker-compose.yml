@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+        proxy:
+                build: ./
+                networks: pi.local
+                ports:
+                        80:80
+                        networks:
+                                pi.local
+                        external:
+                                name: pi.local
+
