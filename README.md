@@ -75,22 +75,7 @@ I put in on my desktop for easy access.
 Test that the server works with “node index.js” while in the root repo folder. After that, visit the pi ip address on port 5000 (you can change the app’s port if needed in index.js).
 
 
-You should now be able to see the video from motion, and the off button should run a bash command shutting down the device. Reboot should reboot the device.
-
-
-
---Make it even better
-
--Docker
-This application is capable of running as a docker container for simplicity (simple if you're familiar with Docker). After cloning the repo to your local machine.
-
-Start by running:
-docker build -t <username>/<whatever-you-wish-to-title-the-app>
-
-the -t flag will "tag" or name the image so when you run "docker ps", it is easier to identify
-
-Then run:
-docker run -p <port-you-want-to-use>:5000 -d <username>/<whatever-you-tagged-the-app-as>
+You should now be able to see the video from motion, and the off button should run a bash command shutting down the device. Reboot should reboot the device. You will have manually restart the application though, the logic is not there yet (could be done with cron @reboot, or turn this program into a linux service and have it start after whatever service makes sense for you and your situation)
 
 
 
@@ -103,7 +88,7 @@ It may need some adjustment based on your system. You can also use rc.local or a
 
 Personally, I wanted to input the ip address and get the application, so i installed and configured nginx as a reverse proxy, automatically redirecting me to the app’s port.
 
-Nginx configuration could fill books upon books, but my configuration is basic. “Sudo apt install nginx”, the go to /etc/nginx/sites-available. I created a new file based on the default (sudo mv default whateveryounameit) and this is what it looks like: 
+Nginx configuration could fill books upon books, but my configuration is basic. “sudo apt install nginx”, the go to /etc/nginx/sites-available. I created a new file based on the default (sudo mv default whateveryounameit) and this is what it looks like: 
 
 *be sure to change the local ip address to the static ip you’ve set (or your hostname, set by the avahi daemon. Usually, it's "pi.local" on the Raspberry Pi), and change the “root” to wherever you cloned the repo to*
 
@@ -133,9 +118,10 @@ This app was developed because of my desire for a fully configurable baby monito
 
 --coming up
 
--I'm working on creating a version of the app for docker that will contain the application and the nginx server in one, making it even easier to use.
+-I'm researching various libraries to detect motion where i will add a my python script to execute, texting you when motion is detected.
 
-(Not finished yet but repo is created on my github) there are python scripts to add, with  functionality like SMS alerts, alerting you of your child moving. And I’m working on an OpenCV script that will alert you via SMS if your child’s eyes are open. Check back if interested!
+(Not finished yet but repo is created on my github) there are python scripts to add, with functionality like SMS alerts, alerting you of your child moving. 
+And I’m working on an OpenCV script that will alert you via SMS if your child’s eyes are open, but that's a bit trickier than merely detecting motion. Check back if interested!
 
 
 
